@@ -4,7 +4,7 @@
     "slug": "mobile_movies_app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo.png",
     "scheme": "mobilemoviesapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -17,6 +17,7 @@
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
