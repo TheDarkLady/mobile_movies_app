@@ -5,7 +5,12 @@ import './global.css';
 
 
 export default function RootLayout() {
-  return <Stack> 
+  return (
+    <Stack
+      screenOptions={{
+        contentStyle: { backgroundColor: '#030014' },
+      }}
+    > 
     <Stack.Screen
     name="(tabs)"
     options={{headerShown: false}}
@@ -16,5 +21,6 @@ export default function RootLayout() {
     options={{headerShown: false}}
     >
     </Stack.Screen>
-  </Stack>;
+    </Stack>
+  );
 }

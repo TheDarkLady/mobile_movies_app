@@ -8,14 +8,12 @@ const TabIcon = ({ focused, icon, title }: any) => {
   return (
     <ImageBackground
       source={focused ? images.highlight : null}
-      className="flex flex-row justify-center items-center w-full flex-1 min-h-14 min-w-[112px] rounded-full overflow-hidden"
-      resizeMode="contain"
+      className="flex flex-row justify-center items-center w-full flex-1 min-h-16 mt-4 min-w-[112px] rounded-full overflow-hidden"
     >
       <Image
         source={icon}
-        style={{ tintColor: focused ? "#151312" : "#fff" }}
+        style={{ tintColor: focused ? "#151312" : "#A8B5DB" }}
         className="size-5"
-        resizeMode="contain"
       />
       {focused && (
         <Text className="text-secondary text-base font-semibold ml-2">
@@ -29,24 +27,26 @@ const TabIcon = ({ focused, icon, title }: any) => {
 const _layout = () => {
   return (
     <Tabs
-      screenOptions={{
-        tabBarStyle: {
-          backgroundColor: "#0F0D23",
-          borderTopWidth: 0,
-          height: 48,
-          paddingVertical: 0,
-          paddingHorizontal: 20,
-          borderRadius: 50,
-          marginBottom: 48,
-          marginHorizontal: 15,
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          columnGap: 20,
-        },
-        tabBarShowLabel: false,
-      }}
+    screenOptions={{
+      tabBarShowLabel: false,
+      tabBarItemStyle: {
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      },
+      tabBarStyle: {
+        backgroundColor: "#0F0D23",
+        borderRadius: 50,
+        marginHorizontal: 20,
+        marginBottom: 36,
+        height: 50,
+        position: "absolute",
+        overflow: "hidden",
+        borderWidth: 0,
+        borderColor: "#0F0D23",
+      },
+    }}
     >
       <Tabs.Screen
         name="index"
