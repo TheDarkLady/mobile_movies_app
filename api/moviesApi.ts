@@ -1,31 +1,41 @@
-const RAPIDAPI_KEY = process.env.EXPO_PUBLIC_RAPIDAPI_KEY;
-const RAPIDAPI_HOST = process.env.EXPO_PUBLIC_RAPIDAPI_HOST;
-const RAPIDAPI_URL = process.env.EXPO_PUBLIC_RAPIDAPI_URL;
+const TMDBAPI_KEY = process.env.EXPO_PUBLIC_TMDB_API_KEY;
+const TMDB_ACCESS_TOKEN = process.env.EXPO_PUBLIC_TMDB_ACCESS_TOKEN;
+const TMDBAPI_URL = process.env.EXPO_PUBLIC_TMDB_API_URL;
 
 export const getMovieDetails = async () => {
   try {
-    console.log('Fetching from URL:', RAPIDAPI_URL);
+    console.log('=== TMDB API Debug ===');
+    console.log('API URL:', TMDBAPI_URL);
+    console.log('API Key:', TMDBAPI_KEY);
+    console.log('Access Token:', TMDB_ACCESS_TOKEN ? 'Exists' : 'Missing');
     
-    const response = await fetch(RAPIDAPI_URL!, {
+    if (!TMDBAPI_URL) {
+      throw new Error('TMDB API URL is undefined. Check your .env file.');
+    }
+    
+    if (!TMDB_ACCESS_TOKEN) {
+      throw new Error('TMDB Access Token is undefined. Check your .env file.');
+    }
+    
+    const response = await fetch(TMDBAPI_URL, {
       method: "GET",
       headers: {
-        'x-rapidapi-host': RAPIDAPI_HOST!,
-        'x-rapidapi-key': RAPIDAPI_KEY!,
-        
-      },
+        accept: 'application/json',
+        Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`
+      }
     });
     
-    console.log('Response status:', response.status);
-    console.log('Response headers:', response.headers);
-    
-    // Check if response is ok
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorText = await response.text();
+      console.error('Error response:', errorText);
+      throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
     }
     
     const result = await response.json();
     console.log('API Response:', result);
-    return result;
+    
+    // TMDB returns movies in a 'results' array
+    return result.results || result;
   } catch (error) {
     console.error('API Error:', error);
     throw error;
