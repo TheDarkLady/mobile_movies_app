@@ -31,6 +31,7 @@ const Movie = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ gap: 16 }}
+          className="mb-6"
         >
           {moviesData.map((result: any, index: number) => (
             <View
