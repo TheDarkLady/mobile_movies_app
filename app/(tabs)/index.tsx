@@ -1,13 +1,26 @@
+import { getGenreDetails } from "@/api/genreApi";
 import Movie from "@/components/movie";
 import MovieGenre from "@/components/movieGenre";
 import SearchBar from "@/components/searchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { useRouter } from "expo-router";
+import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();
+  const [gerneData, setGerneData] = useState<any[]>([]);
+  console.log("getGenreDetails",getGenreDetails());
+  useEffect(() => {
+    const fetchGerneData = async () => {
+      const genreData = await getGenreDetails();
+      console.log("genreData",genreData);
+      setGerneData(genreData);
+    }
+    fetchGerneData();
+  },[])
+  
   
   return (
     <View
@@ -31,32 +44,22 @@ export default function Index() {
           />
         </View>
 
-        <View className="mt-5 mb-2 flex flex-row justify-between items-center">
-          <TouchableOpacity
-            onPress={() => router.push("./nowPlaying")}
-            className="bg-dark-200 px-4 py-2 rounded-full"
+        <ScrollView 
+          horizontal 
+          showsHorizontalScrollIndicator={false}
+          className="mt-5 mb-2"
+          contentContainerStyle={{ alignItems: 'center', justifyContent: 'center' }}
           >
-            <Text className="text-white font-semibold">Top Rated</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => router.push("./topRated")}
-            className="bg-dark-200 px-4 py-2 rounded-full"
-          >
-            <Text className="text-white font-semibold">Action</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => router.push("./upcoming")}
-            className="bg-dark-200 px-4 py-2 rounded-full"
-          >
-            <Text className="text-white font-semibold">Thriller</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => router.push("./upcoming")}
-            className="bg-dark-200 px-4 py-2 rounded-full"
-          >
-            <Text className="text-white font-semibold">Horror</Text>
-          </TouchableOpacity>
-        </View>
+          {gerneData.map((genre: any) => (
+            <TouchableOpacity
+              key={genre.id}
+              onPress={() => router.push("./nowPlaying")}
+              className="bg-dark-200 px-4 py-2 rounded-full mr-3"
+            >
+              <Text className="text-white font-semibold">{genre.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
         
         <Text className="text-white text-2xl font-bold mt-5 mb-3">Top 20 TV Shows</Text>
         <Movie/>
