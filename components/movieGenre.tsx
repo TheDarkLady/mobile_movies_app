@@ -1,5 +1,6 @@
 import { getGenreDetails } from '@/api/genreApi';
 import { getMovieDetails } from '@/api/moviesApi';
+import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 
@@ -7,7 +8,7 @@ const MovieGenre = () => {
     const [genreData, setGenreData] = useState<any[]>([]);
     const [movieData, setMovieData] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-    
+    const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -55,7 +56,7 @@ const MovieGenre = () => {
                                 showsHorizontalScrollIndicator={false}
                                 keyExtractor={(item) => item.id.toString()}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity className="mr-4">
+                                    <TouchableOpacity className="mr-4" onPress={() => router.push(`/movies/${item.id}`)}>
                                         <Image
                                             source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
                                             className="w-32 h-48 rounded-lg"

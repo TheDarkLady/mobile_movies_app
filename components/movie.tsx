@@ -1,6 +1,7 @@
 import { getMovieDetails } from "@/api/moviesApi";
+import { Link } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 const Movie = () => {
   const [moviesData, setMoviesData] = useState<any[]>([]);
@@ -38,34 +39,17 @@ const Movie = () => {
               key={index}
               className="rounded-xxl  border border-dark-300 w-40"
             >
-              <View className="flex flex-1 flex-col items-start">
-                
+              <Link
+               href={`/movies/${result.id}`} asChild>
+              <TouchableOpacity className="flex flex-1 flex-col items-start">
                 <Image
                   source={{ uri: `https://image.tmdb.org/t/p/w500${result.poster_path}` }}
                   className="w-full h-60 rounded-t-lg bg-dark-300"
                   resizeMode="contain"
                 />
-                {/* <View className="flex-1 p-2">
-                  <Text className="text-white text-lg font-bold mb-1">
-                    {movie.originalTitle || movie.originalTitle}
-                  </Text>
-
-                  {movie.rating && (
-                    <Text className="text-yellow-400 text-sm">
-                      ⭐ {movie.averageRating} / 10
-                    </Text>
-                  )}
-
-                  {movie.description && (
-                    <Text
-                      className="text-gray-300 text-sm mt-2"
-                      numberOfLines={3}
-                    >
-                      {movie.description}
-                    </Text>
-                  )}
-                </View> */}
-              </View>
+                
+              </TouchableOpacity>
+              </Link>
             </View>
           ))}
         </ScrollView>
