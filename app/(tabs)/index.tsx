@@ -13,16 +13,13 @@ export default function Index() {
   const [gerneData, setGerneData] = useState<any[]>([]);
   const [isGenreSelected, setIsGenreSelected] = useState<boolean>(false);
   const [genreId, setGenreId] = useState<number | null>(null);
-  console.log("getGenreDetails", getGenreDetails());
 
   useEffect(() => {
-    console.log("isGenreSelected changed to:", isGenreSelected);
   }, [isGenreSelected]);
 
   useEffect(() => {
     const fetchGerneData = async () => {
       const genreData = await getGenreDetails();
-      console.log("genreData", genreData);
       setGerneData(genreData);
     };
     fetchGerneData();
