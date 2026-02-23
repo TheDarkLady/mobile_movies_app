@@ -1,17 +1,27 @@
 import { getMovieDetails } from "@/api/moviesApi";
+import useWishlist from "@/hooks/useWishlist";
 import { Link } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { icons } from "../constants/icons";
 
 const Movie = () => {
   const [moviesData, setMoviesData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const {wishlist, toggleWishlist} = useWishlist()
 
   useEffect(() => {
     const fetchMoviesData = async () => {
       try {
         const data = await getMovieDetails();
-        console.log("Movies data:", data);
         if (Array.isArray(data)) {
           setMoviesData(data.slice(0, 20)); // Show top 20
         }
@@ -39,16 +49,27 @@ const Movie = () => {
               key={index}
               className="rounded-xxl  border border-dark-300 w-40"
             >
-              <Link
-               href={`/movies/${result.id}`} asChild>
-              <TouchableOpacity className="flex flex-1 flex-col items-start">
-                <Image
-                  source={{ uri: `https://image.tmdb.org/t/p/w500${result.poster_path}` }}
-                  className="w-full h-60 rounded-t-lg bg-dark-300"
-                  resizeMode="contain"
-                />
-                
-              </TouchableOpacity>
+              <Link href={`/movies/${result.id}`} asChild>
+                <TouchableOpacity className="flex flex-1 flex-col items-start">
+                  <Pressable
+                   className="absolute top-2 right-2 z-10 cursor-pointer"
+                  onPress={() => {
+                    toggleWishlist(result)
+                  }}>
+                    <Image
+                      source={icons.save}
+                      className="w-[18px] h-[18px]"
+                      style={{ tintColor: wishlist.some(item => item.id === result.id) ? "#0F0D23" : "#fff" }}
+                    />
+                  </Pressable>
+                  <Image
+                    source={{
+                      uri: `https://image.tmdb.org/t/p/w500${result.poster_path}`,
+                    }}
+                    className="w-full h-60 rounded-t-lg bg-dark-300"
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
               </Link>
             </View>
           ))}

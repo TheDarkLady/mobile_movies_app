@@ -21,9 +21,6 @@ export const getMovieDetails = async ({query = ''}: {query?: string} = {}) => {
     }
 
     const data = await response.json();
-
-    console.log('data',data);
-
     return data?.results ?? data;
   } catch (error: any) {
 

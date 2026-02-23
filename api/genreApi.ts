@@ -18,10 +18,7 @@ export const getGenreDetails = async () => {
       console.error('❌ API Error Response:', errorText);
     }
 
-    const data = await response.json();
-
-    console.log('data',data);
-    
+    const data = await response.json();    
     return data?.genres ?? data;
     }
     catch (error: any) {
